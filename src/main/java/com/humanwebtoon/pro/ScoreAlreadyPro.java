@@ -17,29 +17,24 @@ import javax.servlet.http.HttpSession;
 import com.humanwebtoon.base.JDBCConnection;
 import com.humanwebtoon.vo.UserInfo;
 
-@WebServlet("/RequestAlreadyPro")
-public class RequestAlreadyPro extends HttpServlet {
+@WebServlet("/ScoreAlreadyPro")
+public class ScoreAlreadyPro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doHandle(request,response);
 	}
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doHandle(request,response);
-	}
-
-	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println("RequestAlreadyPro");
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
+		
+		String target = request.getParameter("target");
 		UserInfo user = (UserInfo)session.getAttribute("user");
 		String id = user.getId();
-		PrintWriter out = response.getWriter();
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -47,26 +42,21 @@ public class RequestAlreadyPro extends HttpServlet {
 		
 		try {
 			conn = JDBCConnection.getConnection();
-			String sql = "select writer from web_request where writer = ?";
+			String sql = "select score from web_score where target = ? and id = ?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, id);
+			stmt.setString(1, target);
+			stmt.setString(2, id);
 			rs = stmt.executeQuery();
-			if(rs.next()) {
-				out.println("1");
-				System.out.println("신청중");
-			}else {
-				out.println("0");
-				System.out.println("새로운신청");
-			}
 			
+			if(rs.next()) out.print(rs.getString("score"));
+			else out.print("none");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCConnection.close(conn, stmt, rs);
-			out.close();
 		}
-		
+
 	}
 }

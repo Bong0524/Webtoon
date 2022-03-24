@@ -9,7 +9,12 @@ WebtoonInfo webtoon = (WebtoonInfo) request.getAttribute("webtoon");
 ArrayList<ToonpageInfo> toonpageList = (ArrayList<ToonpageInfo>)request.getAttribute("toonpageList");
 UserInfo user = (UserInfo) session.getAttribute("user");
 %>
-
+<style>
+.scoreView{
+	position: absolute;
+	left: 0;
+}
+</style>
 <fieldset style="margin-bottom: 20px; position: relative;">
 	<img alt="이미지 오류.." src="img/<%=webtoon.getToon_id() %>/thumbnail.jpg" width="200px" height="200px" style="float: left; margin-right: 10px">
 		<div style="padding: 5px">
@@ -23,10 +28,10 @@ UserInfo user = (UserInfo) session.getAttribute("user");
 </fieldset>
 <table id="pageList" style="width: 100%; text-align: center; border-spacing: 0;border-collapse: collapse;">
 	<tr>
-		<td>썸네일</td>
+		<td width="140px">썸네일</td>
 		<td width="280px">제목</td>
-		<td width="80px">조회수</td>
-		<td width="200px">등록일</td>
+		<td width="150px">별점</td>
+		<td width="130px">등록일</td>
 	</tr>
 	<%
 	/* WebtoonPro에서 받아온 ArrayList를 이용해 웹툰 페이지를 뿌린다. */
@@ -43,7 +48,11 @@ UserInfo user = (UserInfo) session.getAttribute("user");
 			<a href="ToonPage?toon=<%=toonpage.getToon_id()%>&page=<%=toonpage.getPage_num()%>" class="toonLink" ><%=toonpage.getPage_num()%>화.&nbsp;<%=toonpage.getTitle() %></a>
 		</td>
 		<td>
-			<%=toonpage.getView_cnt() %>
+			<div style="position: relative; width: 80px; height: 24px; display: inline-block;">
+				<span class="scoreView" style="color: #ccc;">★★★★★</span>
+				<span class="scoreView" style="color: red; overflow: hidden; width: <%=toonpage.getScore()*8 %>px;">★★★★★</span>
+			</div>
+			<span style="vertical-align: super; text-align: right; width: 30px; font-weight: bold; font-size: 0.9em; display: inline-block;"><%=toonpage.getScore() %></span>
 		</td>	
 		<td>
 			<p><%=toonpage.getWrdate() %></p>

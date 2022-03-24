@@ -48,7 +48,7 @@ public class ToonPage extends HttpServlet {
 			System.out.println(cnt);
 			stmt.close();
 			/* 출력할 웹툰의 페이지 검색 후 담는 구문 */
-			sql = "select * from web_toonpage where page_id = ?";
+			sql = "select t.*, nvl(round(avg(s.score),2),0) as score from web_toonpage t join web_score s on t.page_id = s.target(+) where page_id = ? group by page_id,page_num,toon_id,title,view_cnt,wrdate";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, page_id);
 			rs = stmt.executeQuery();
@@ -60,6 +60,7 @@ public class ToonPage extends HttpServlet {
 				toonpage.setToon_id(rs.getString("toon_id"));
 				toonpage.setView_cnt(rs.getInt("view_cnt"));
 				toonpage.setWrdate(rs.getDate("wrdate"));
+				toonpage.setScore(rs.getDouble("score"));
 				toonpage.setImgs(imgList);
 				request.setAttribute("toonpage", toonpage);
 			}

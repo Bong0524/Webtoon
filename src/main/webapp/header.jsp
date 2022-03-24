@@ -56,7 +56,7 @@ header {
 		<img id="logo" alt="LOGO" src="img/logo/logo.png">
 	</a>
 	<form id="searchForm" name="searchForm" action="SearchPro" method="get">
-		<select name="type" id="searchOption">
+		<select name="type" id="searchOption" style="cursor: pointer;">
 			<option value="title">제목</option>
 			<option value="writer">작가</option>
 		</select><input id="searchBox" type="text" 

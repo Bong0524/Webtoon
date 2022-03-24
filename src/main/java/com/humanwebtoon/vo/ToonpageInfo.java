@@ -11,6 +11,14 @@ public class ToonpageInfo {
 	private int view_cnt;
 	private Date wrdate;
 	private File[] imgs;
+	private Double score;
+	
+	public Double getScore() {
+		return score;
+	}
+	public void setScore(Double score) {
+		this.score = score;
+	}
 	public File[] getImgs() {
 		return imgs;
 	}

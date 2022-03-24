@@ -13,7 +13,8 @@ if (topBannerList == null) {%>
 </div>
 <div id="bannerBox" style="width: 636px; height: 100%; overflow: hidden;">
 	<ul id="bannerScroll">
-	<%for(int i = 0 ; i < topBannerList.size() ; i++){ 
+	<%if(topBannerList.size() != 0){
+	for(int i = 0 ; i < topBannerList.size() ; i++){ 
 		if(!topBannerList.get(i).getLink().equals("") || topBannerList.get(i).getLink() != null){%>
 		<li style="height: 206px; width: 100%;" onclick="location.href = '<%=topBannerList.get(i).getLink()%>'">
 			<img alt="탑 배너칸" height="100%" width="365px;" style="float: right;" src="img/banner/<%=topBannerList.get(i).getBanner_id()%>.jpg">
@@ -43,7 +44,5 @@ setInterval(function() {
 	scroll >= size-1 ? scroll = 0 : scroll++;
 	$("#bannerScroll").filter(":not(:animated)").animate({ marginTop : scroll*(-206)+"px" },1000);
 }, 15000)
-
-
-
 </script>
+<%}%>

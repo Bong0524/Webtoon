@@ -49,7 +49,7 @@ public class WebtoonPro extends HttpServlet {
 			rs.close();
 			stmt.close();
 			
-			sql = "select * from WEB_TOONPAGE where toon_id = ? order by wrdate desc";
+			sql = "select t.*, nvl(round(avg(s.score),2),0) as score from web_toonpage t join web_score s on t.page_id = s.target(+) where toon_id = ? group by page_id,page_num,toon_id,title,view_cnt,wrdate order by wrdate desc";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, toon_id);
 			rs = stmt.executeQuery();
@@ -61,8 +61,8 @@ public class WebtoonPro extends HttpServlet {
 				toonpage.setPage_num(rs.getInt("page_num"));
 				toonpage.setTitle(rs.getString("title"));
 				toonpage.setToon_id(rs.getString("toon_id"));
-				toonpage.setView_cnt(rs.getInt("view_cnt"));
 				toonpage.setWrdate(rs.getDate("wrdate"));
+				toonpage.setScore(rs.getDouble("score"));
 				toonpageList.add(toonpage);
 			}
 			request.setAttribute("toonpageList", toonpageList);

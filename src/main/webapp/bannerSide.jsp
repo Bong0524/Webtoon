@@ -7,14 +7,15 @@ ArrayList<BannerInfo> sideBannerList = (ArrayList<BannerInfo>)request.getAttribu
 if(sideBannerList == null){
 %>
 <jsp:forward page="BannerLoadPro?pos=side"/>
-<%} 
+<%}if(sideBannerList.size()!=0){
 int ran = (int)(Math.random()*sideBannerList.size());
 %>
 <img alt="사이드 배너칸" id="sideBannder" width="100%" style="cursor: pointer;">
 <script>
 	var ran = <%=ran%>+1;
-	$("#sideBannder").attr("src","img/banner/side"+ran+".jpg");
+	$("#sideBannder").attr("src","img/banner/<%=sideBannerList.get(ran).getBanner_id()%>.jpg");
 	$("#sideBannder").click(function() {
 		location.href="<%=sideBannerList.get(ran).getLink()%>";
 	});
 </script>
+<%}%>
