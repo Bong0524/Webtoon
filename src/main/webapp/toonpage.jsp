@@ -44,20 +44,6 @@ System.out.println(target);
 input {
 	cursor: pointer;
 }
-.controlBtn{
-	margin: 5px;
-	width: 80px;
-}
-#control{
-	position: fixed; 
-	background-color: #ccc; 
-	padding: 5px; 
-	border-radius: 10px; 
-	right: 30px; 
-	top: 400px;
-	display: flex;
-	flex-direction: column;
-}
 
 .scoreView{
 	position: absolute;
@@ -89,6 +75,28 @@ input {
 	border-radius: 4px;
 }
 
+#control{
+	position: fixed; 
+	background-color: #ddd; 
+	border-radius: 10px; 
+	right: 30px; 
+	top: 400px;
+	display: flex;
+	flex-wrap: wrap;
+	height: 190px;
+	width: 130px;
+	justify-content: space-around;
+	align-content: space-around;
+}
+.controlBtn{
+	background: none;
+	border: none;
+}
+.btnImg{
+	width: 50px;
+	display: block;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -142,13 +150,14 @@ input {
 				<input id="commentBtn" type="button" value="댓글 등록" style="margin-right: 5px; height: 80px; width: 80px; border-radius: 2px; background: rgb(69,56,40); color: #ddd;">
 				<textarea id="comment" name="comment" style="resize: none; vertical-align: bottom; padding: 5px; width: 509px; height: 80px;"></textarea>
 		</div>
-	
 		<!-- 웹툰 리모컨 -->
 		<div id="control">
-			<input class="controlBtn" type="button" value="목록" onclick="location.href = 'WebtoonPro?toon=<%=toonpage.getToon_id()%>'">
-			<input class="controlBtn pageBtn" type="button" value="다음화">
-			<input class="controlBtn pageBtn" type="button" value="이전화">
-			<input class="controlBtn" type="button" value="홈으로" onclick="location.href ='index.jsp?inPage=home'">
+			<button class="controlBtn" value="홈으로" onclick="location.href ='index.jsp?inPage=home'"><img class="btnImg" alt="홈" src="img/logo/home.png"></button>
+			<button class="controlBtn" value="목록" onclick="location.href = 'WebtoonPro?toon=<%=toonpage.getToon_id()%>'"><img class="btnImg" alt="목록" src="img/logo/list.png"></button>
+			<button class="controlBtn moveScroll" value="위로"><img class="btnImg" alt="위" src="img/logo/arrow.png"></button>
+			<button class="controlBtn pageBtn" value="다음화"><img class="btnImg" alt="다음" src="img/logo/arrow.png" style="transform: rotate(90deg);"></button>
+			<button class="controlBtn moveScroll" value="아래로"><img class="btnImg" alt="아래" src="img/logo/arrow.png" style="transform: scaleY(-1);"></button>
+			<button class="controlBtn pageBtn" value="이전화"><img class="btnImg" alt="이전" src="img/logo/arrow.png" style="transform: rotate(270deg)"></button>
 		</div>
 		
 		<div id="commentsBox" style="margin: 0 auto 100px; width: 600px">
@@ -170,6 +179,7 @@ input {
 	/* 웹툰컨트롤러 */
 	var now = "<%=toonpage.getPage_id()%>";
 	var how = "";
+	/* 페이지 이동 */
 	$(".pageBtn").click(function(e) {
 		how =  $(this).val()
 		e.preventDefault;
@@ -181,10 +191,15 @@ input {
 				now : now
 			},
 			success : function(data) {
-				if(data == "none") alert(how+"가 존재하지 않습니다.");
+				if(data == "none") alert(how+"가 존재하지 않습니다."); 
 				else location.href = "ToonPage?toon=<%=toonpage.getToon_id()%>&page="+data+"";
 			}
 		})
+	})
+	/* 스크롤이동 */
+	$(".moveScroll").click(function(e) {
+		e.prevnetDefault;
+		if(!$('html, body').is(":animated")) $('html, body').animate({scrollTop : $(this).val() == "위로" ?  0 : $("#scoreViewBox").offset().top},1500);
 	})
 	
 	
@@ -288,7 +303,7 @@ input {
 		}
 	<%}%>
 	})
-	
+
 	</script>
 	</body>
 </html>
