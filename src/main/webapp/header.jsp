@@ -2,8 +2,14 @@
 	pageEncoding="UTF-8"%>
 <style>
 header {
-	height: 50px;
-	margin: 20px 0;
+	height: 70px;
+	background: white;
+	padding: 10px 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 10;
+	border-bottom: 1px solid #eee
 }
 
 #logo {
@@ -52,14 +58,16 @@ header {
 }
 </style>
 <header>
-	<a href="index.jsp?inPage=home"> 
-		<img id="logo" alt="LOGO" src="img/logo/logo.png">
-	</a>
-	<form id="searchForm" name="searchForm" action="SearchPro" method="get">
-		<select name="type" id="searchOption" style="cursor: pointer;">
-			<option value="title">제목</option>
-			<option value="writer">작가</option>
-		</select><input id="searchBox" type="text" 
-		name="search"><input id="searchBtn" type="submit" value="검색">
-	</form>
+	<div style="width: 960px; margin: 0 auto;">
+		<a href="index.jsp?inPage=home"> 
+			<img id="logo" alt="LOGO" src="img/logo/logo.png">
+		</a>
+		<form id="searchForm" name="searchForm" action="SearchPro" method="get">
+			<select name="type" id="searchOption" style="cursor: pointer;">
+				<option value="title">제목</option>
+				<option value="writer">작가</option>
+			</select><input id="searchBox" type="text" 
+			name="search"><input id="searchBtn" type="submit" value="검색">
+		</form>
+	</div>
 </header>

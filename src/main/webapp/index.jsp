@@ -36,7 +36,7 @@ a {
 
 #container {
 	width: 960px;
-	margin: 0 auto;
+	margin: 90px auto 0;
 }
 
 ul {
@@ -113,9 +113,13 @@ input {
 	background: rgb(69, 56, 40);
 	color: #ddd;
 	border-radius: 3px;
-	position: absolute;
-	bottom: 10px;
-	right: 10px;
+	padding: 5px;
+}
+
+#getSeenBtn {
+	background: rgb(69, 56, 40);
+	color: #ddd;
+	border-radius: 3px;
 	padding: 5px;
 }
 
@@ -127,8 +131,8 @@ img {
 <link rel="icon" href="img/logo/favicon.ico">
 </head>
 <body>
+	<jsp:include page="header.jsp" />
 	<div id="container">
-		<jsp:include page="header.jsp" />
 		<div style="display: flex; justify-content: space-between;">
 			<section style="float: left; width: 700px">
 				<fieldset id="topBannderBox" style="margin-bottom: 10px; height: 210px; width: 700px; cursor: pointer;">

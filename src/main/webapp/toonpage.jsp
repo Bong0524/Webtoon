@@ -1,3 +1,4 @@
+<%@page import="com.humanwebtoon.pro.ToonPage"%>
 <%@page import="com.humanwebtoon.vo.CommentInfo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.humanwebtoon.vo.UserInfo"%>
@@ -9,8 +10,9 @@
 ArrayList<CommentInfo> commentsList = (ArrayList<CommentInfo>)request.getAttribute("commentsList");
 ToonpageInfo toonpage = (ToonpageInfo)request.getAttribute("toonpage");
 UserInfo user = (UserInfo)session.getAttribute("user");
-if(toonpage==null)
-	System.out.println("TOONPAGE NULL");
+Cookie seen = new Cookie(toonpage.getToon_id(),toonpage.getPage_num()+"");
+seen.setMaxAge(60*60*30);
+response.addCookie(seen);
 File[] imgs = toonpage.getImgs();
 String target = toonpage.getPage_id();
 target = target.replace("_", "%20");
@@ -33,7 +35,7 @@ System.out.println(target);
 }
 #container{
 	width: 960px;
-	margin: 0 auto;
+	margin: 90px auto 0;
 }
 #toonImage{
 		width: 600px;
@@ -44,16 +46,17 @@ input {
 }
 .controlBtn{
 	margin: 5px;
-	width: 100px;
+	width: 80px;
 }
 #control{
-	width: 120px; 
 	position: fixed; 
 	background-color: #ccc; 
 	padding: 5px; 
 	border-radius: 10px; 
 	right: 30px; 
 	top: 400px;
+	display: flex;
+	flex-direction: column;
 }
 
 .scoreView{
@@ -89,8 +92,8 @@ input {
 </style>
 </head>
 <body>
+	<jsp:include page="header.jsp"/>
 	<div id="container">
-		<jsp:include page="header.jsp"/>
 		<div style="margin: 50px">
 			<h2 style="background: #eee; padding: 10px"><%=toonpage.getPage_num()%>화.&nbsp;<%=toonpage.getTitle() %></h2>
 			조회수 : <%=toonpage.getView_cnt() %>

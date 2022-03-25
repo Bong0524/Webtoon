@@ -29,20 +29,26 @@ if (topBannerList == null) {%>
 var size = <%=topBannerList.size()%>;
 var scroll = Math.floor(Math.random()*size);
 $("#bannerScroll").css("marginTop" ,scroll*(-206)+"px" );
-/* 업버튼 눌렀을경우 배너 변경 */
-$("#downBanner").click(function(e){
-	scroll >= size-1 ? scroll = 0 : scroll++;
-	$("#bannerScroll").filter(":not(:animated)").animate({ marginTop : scroll*(-206)+"px" },1000);
-});
 /* 다운버튼 눌렀을경우 배너 변경 */
+$("#downBanner").click(function(e){
+	if(!$("#bannerScroll").is(":animated")){
+		scroll >= size-1 ? scroll = 0 : scroll++;
+		$("#bannerScroll").animate({ marginTop : scroll*(-206)+"px" },1000);
+	}
+});
+/* 업버튼 눌렀을경우 배너 변경 */
 $("#upBanner").click(function(e){
-	scroll <= 0 ? scroll = size-1 : scroll--;
-	$("#bannerScroll").filter(":not(:animated)").animate({ marginTop : scroll*(-206)+"px" },1000);
+	if(!$("#bannerScroll").is(":animated")){
+		scroll <= 0 ? scroll = size-1 : scroll--;
+		$("#bannerScroll").animate({ marginTop : scroll*(-206)+"px" },1000);
+	}
 });
 /* 10초마다 배너 자동변경 */
 setInterval(function() { 
-	scroll >= size-1 ? scroll = 0 : scroll++;
-	$("#bannerScroll").filter(":not(:animated)").animate({ marginTop : scroll*(-206)+"px" },1000);
+	if(!$("#bannerScroll").is(":animated")){
+		scroll >= size-1 ? scroll = 0 : scroll++;
+		$("#bannerScroll").animate({ marginTop : scroll*(-206)+"px" },1000);
+	}
 }, 15000)
 </script>
 <%}%>

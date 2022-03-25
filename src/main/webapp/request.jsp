@@ -21,7 +21,7 @@ if(user == null){
 }
 #container{
 	width: 960px;
-	margin: 0 auto;
+	margin: 90px auto 0;
 }
 #viewThumbnail{
 	width: 200px;
@@ -81,8 +81,8 @@ input::-webkit-inner-spin-button {
 </style>
 </head>
 <body>
-	<div id="container">
 		<jsp:include page="header.jsp"/>
+	<div id="container">
 		<form name="requestForm" action="RequestPro" method="post" enctype="multipart/form-data">
 			<!-- 웹툰에 대한 소개 -->
 			<div id="inputInfo" style="width: 700px; margin: 0 auto;">

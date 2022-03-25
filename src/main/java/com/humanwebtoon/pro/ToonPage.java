@@ -20,7 +20,7 @@ import com.humanwebtoon.vo.ToonpageInfo;
 @WebServlet("/ToonPage")
 public class ToonPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String toon_id = request.getParameter("toon");

@@ -26,7 +26,7 @@ if (user == null || !user.getGrade().equals("작가")) {
 
 #container {
 	width: 960px;
-	margin: 0 auto;
+	margin: 90px auto 0;
 }
 
 #viewBox {
@@ -74,8 +74,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 </style>
 </head>
 <body>
-	<div id="container">
 		<jsp:include page="header.jsp" />
+	<div id="container">
 		<form name="uploadForm" action="UploadPro" method="post"
 			enctype="multipart/form-data">
 			<input type="hidden" name="toon_id"

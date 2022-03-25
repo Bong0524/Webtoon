@@ -8,6 +8,13 @@
 WebtoonInfo webtoon = (WebtoonInfo) request.getAttribute("webtoon");
 ArrayList<ToonpageInfo> toonpageList = (ArrayList<ToonpageInfo>)request.getAttribute("toonpageList");
 UserInfo user = (UserInfo) session.getAttribute("user");
+/* 마지막으로 본화 */
+Cookie[] seen = request.getCookies();
+String toon_ck = "1"; 
+for(int i = 0 ; i < seen.length ; i++){
+	if(seen[i].getName().equals(webtoon.getToon_id())) toon_ck = seen[i].getValue();
+}
+System.out.println(toon_ck);
 %>
 <style>
 .scoreView{
@@ -24,7 +31,10 @@ UserInfo user = (UserInfo) session.getAttribute("user");
 	<p style="word-break : keep-all; padding: 10px;">
 		<%=webtoon.getInfo() %>
 	</p>
-	<input id="uploadBtn" type="hidden" value="업로드" onclick="location.href='upload.jsp?toon=<%=webtoon.getToon_id()%>'">
+	<div style="position: absolute; bottom: 10px; right: 10px;">
+		<input id="getSeenBtn" type="button" value="<%=toon_ck.equals("1") ? "1화 보기" : "최근 본화"%>" onclick="location.href='ToonPage?toon=<%=webtoon.getToon_id()%>&page=<%=toon_ck%>'">
+		<input id="uploadBtn" type="hidden" value="업로드" onclick="location.href='upload.jsp?toon=<%=webtoon.getToon_id()%>'">
+	</div>
 </fieldset>
 <table id="pageList" style="width: 100%; text-align: center; border-spacing: 0;border-collapse: collapse;">
 	<tr>
