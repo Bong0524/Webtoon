@@ -101,6 +101,12 @@ input {
 </head>
 <body>
 	<jsp:include page="header.jsp"/>
+	<%if(commentsList==null){ %>
+		<jsp:forward page="CommentListPro">
+			<jsp:param value="<%=toonpage.getToon_id()%>" name="toon"/>
+			<jsp:param value="<%=toonpage.getPage_num()%>" name="page"/>
+		</jsp:forward>
+	<%} %>
 	<div id="container">
 		<div style="margin: 50px">
 			<h2 style="background: #eee; padding: 10px"><%=toonpage.getPage_num()%>화.&nbsp;<%=toonpage.getTitle() %></h2>
@@ -161,14 +167,8 @@ input {
 		</div>
 		
 		<div id="commentsBox" style="margin: 0 auto 100px; width: 600px">
-			<%if(commentsList!=null){ %>
 			<jsp:include page="commentsList.jsp"/>
-			<%}else{ %>
-			<jsp:forward page="CommentListPro">
-				<jsp:param value="<%=toonpage.getToon_id()%>" name="toon"/>
-				<jsp:param value="<%=toonpage.getPage_num()%>" name="page"/>
-			</jsp:forward>
-			<%} %>
+			
 		</div>
 		<jsp:include page="footer.jsp"/>
 	</div>

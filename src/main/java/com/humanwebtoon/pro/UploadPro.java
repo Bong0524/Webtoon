@@ -68,7 +68,7 @@ public class UploadPro extends HttpServlet {
 				System.out.println(i+"//"+part.getSubmittedFileName());
 				if(!part.getName().equals("imgs")) continue; //imgs로 들어온 Part가 아니면 스킵
 				savenum++;
-				uploadUtil.saveFiles(part, uploadUtil.createFilePath(toon_id,page),savenum+".jpg");
+				uploadUtil.saveFiles(part, uploadUtil.createFilePath(toon_id,page),String.format("%03d", savenum)+".jpg");
 			}
 			response.sendRedirect("WebtoonPro?toon="+toon_id+"");
 		} catch (ClassNotFoundException e) {

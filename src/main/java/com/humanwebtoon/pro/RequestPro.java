@@ -69,7 +69,7 @@ public class RequestPro extends HttpServlet {
 			Part part = imgs.get(i);
 			if(!part.getName().equals("imgs")) continue; //imgs로 들어온 Part가 아니면 스킵
 			savenum++;
-			requestUtil.saveFiles(part, requestUtil.createFilePath(writer),savenum+".jpg");
+			requestUtil.saveFiles(part, requestUtil.createFilePath(writer),String.format("%03d", savenum)+".jpg");
 		}
 		try { 
 			conn = JDBCConnection.getConnection(); 
