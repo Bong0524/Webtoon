@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-String back = request.getParameter("back");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -99,7 +96,7 @@ input{
 		<a href="index.jsp?inPage=home"><img id="logo" alt="LOGO" src="img/logo/logo.png"></a>
 		<fieldset id="loginBox" >
 			<p id="loginP">로그인</p>
-			<input type="hidden" value="<%=back %>" name="back"><br>
+			<input type="hidden" value="${param.back}" name="back"><br>
 			<div>
 				<div id="inpTop">
 					<input class="inputBox" type="text" placeholder="아이디" name="id" id="id"><br>
@@ -120,6 +117,7 @@ input{
 	</div>
 </div>
 <script type="text/javascript">
+console.log("${param.back}");
 	/* 각각 입력창에 대한 꾸미기 */
 	$("#id").focus(function(e){
 		$("#inpTop").css("border", "solid 1px rgb(69,56,40)");
@@ -145,7 +143,7 @@ input{
 	})
 	/* 로그인 버튼을 눌렀을때의 처리 */
 	var inputBox = document.getElementsByClassName("inputBox");
-	var back = "<%=back%>";
+	var back = "${param.back}";
 	var status ;
 	$("#loginBtn").click(function(e){
 		e.preventDefault();

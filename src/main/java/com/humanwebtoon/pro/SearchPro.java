@@ -49,7 +49,8 @@ public class SearchPro extends HttpServlet {
 				webtoonList.add(webtoon);
 			}
 			request.setAttribute("webtoonList", webtoonList);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp?inPage=searchResult");
+			request.setAttribute("inPage", "searchResult");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

@@ -1,18 +1,8 @@
-<%@page import="com.humanwebtoon.vo.UserInfo"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.humanwebtoon.pro.WebtoonListPro"%>
-<%@page import="com.humanwebtoon.vo.WebtoonInfo"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-WebtoonInfo webtoon = (WebtoonInfo) request.getAttribute("webtoon");
-UserInfo user = (UserInfo) session.getAttribute("user");
-String inPage = request.getParameter("inPage");
-/* 페이지 경로가 설정되어있지 않으면 home으로 지정한다. */
-if (inPage == null) {
-	inPage = "home";
-}
-%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -131,38 +121,46 @@ img {
 <link rel="icon" href="img/logo/favicon.ico">
 </head>
 <body>
-	<jsp:include page="header.jsp" />
-	<div id="container">
-		<div style="display: flex; justify-content: space-between;">
-			<section style="float: left; width: 700px">
-				<fieldset id="topBannderBox" style="margin-bottom: 10px; height: 210px; width: 700px; cursor: pointer;">
-					<jsp:include page="bannerTop.jsp"/>
-				</fieldset>
-				<!-- 페이지가 home으로 지정되있는경우 -->
-				<%if (inPage.equals("home")) {%>
-				<!-- 웹툰리스트 페이지를 인클루딩한다. -->
-				<jsp:include page="webtoonList.jsp" />
-				<%} else {%>
-				<!-- 페이지가 지정되어 있을 경우 지정된 페이지를 include한다. -->
-				<jsp:include page='<%=inPage + ".jsp"%>' />
-				<%}%>
-			</section>
-			<!-- 로그인 및 정보와 광고를 띄울 박스 -->
-			<nav style="width: 250px; margin-bottom: 10px">
-				<fieldset style="height: 210px; padding: 10px; width: 100%">
-					<!-- 로그인 여부에 따른 로그인 박스 처리 -->
-					<%if (user != null) {%>
-					<jsp:include page="userBox.jsp" />
-					<%} else {%>
-					<jsp:include page="loginBox.jsp" />
-					<%}%>
-				</fieldset>
-				<fieldset style="margin-top: 10px; width: 250px;">
-					<jsp:include page="bannerSide.jsp"/>
-				</fieldset>
-			</nav>
-		</div>
-		<jsp:include page="footer.jsp"/>
+<c:if test="${empty inPage}">
+	<c:set var="inPage" value="home"/>
+</c:if>
+<jsp:include page="header.jsp" />
+<div id="container">
+	<div style="display: flex; justify-content: space-between;">
+		<section style="float: left; width: 700px">
+			<fieldset id="topBannderBox" style="margin-bottom: 10px; height: 210px; width: 700px; cursor: pointer;">
+				<jsp:include page="bannerTop.jsp"/>
+			</fieldset>
+			<c:choose>
+				<c:when test="${inPage eq 'home' || empty inPage}">
+					<!-- 페이지가 home으로 지정되있는경우 웹툰리스트 페이지를 인클루딩한다. -->
+					<jsp:include page="webtoonList.jsp" />
+				</c:when>
+				<c:otherwise>
+					<!-- 페이지가 지정되어 있을 경우 지정된 페이지를 include한다. -->
+					<jsp:include page="${inPage }.jsp" />
+				</c:otherwise>
+			</c:choose>
+		</section>
+		<!-- 로그인 및 정보와 광고를 띄울 우측박스 -->
+		<nav style="width: 250px; margin-bottom: 10px">
+			<fieldset style="height: 210px; padding: 10px; width: 100%">
+				<!-- 로그인 여부에 따른 로그인 박스 처리 -->
+				<c:choose>
+					<c:when test="${!empty user}">
+						<jsp:include page="userBox.jsp" />
+					</c:when>
+					<c:otherwise>
+						<jsp:include page="loginBox.jsp" />
+					</c:otherwise>
+				</c:choose>
+			</fieldset>
+			<fieldset style="margin-top: 10px; width: 250px;">
+				<jsp:include page="bannerSide.jsp"/>
+			</fieldset>
+		</nav>
 	</div>
+	<jsp:include page="footer.jsp"/>
+</div>
 </body>
 </html>

@@ -1,21 +1,19 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.humanwebtoon.vo.BannerInfo"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-ArrayList<BannerInfo> sideBannerList = (ArrayList<BannerInfo>)request.getAttribute("sideBannerList");
-if(sideBannerList == null){
-%>
-<jsp:forward page="BannerLoadPro?pos=side"/>
-<%}if(sideBannerList.size()!=0){
-int ran = (int)(Math.random()*sideBannerList.size());
-%>
-<img alt="사이드 배너칸" id="sideBannder" width="100%" style="cursor: pointer;">
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:if test="${empty sideBannerList}">
+	<jsp:forward page="BannerLoadPro?pos=side"/>
+</c:if>
+<c:if test="${fn:length(sideBannerList) ne 0}">
+<c:set var="ran"><%=Math.random()%></c:set>
+<fmt:parseNumber var="num" integerOnly="true" type="number" value="${ran * fn:length(sideBannerList)}" />
+<img alt="사이드 배너칸" id="sideBanner" width="100%" style="cursor: pointer;">
 <script>
-	var ran = <%=ran%>+1;
-	$("#sideBannder").attr("src","img/banner/<%=sideBannerList.get(ran).getBanner_id()%>.jpg");
-	$("#sideBannder").click(function() {
-		location.href="<%=sideBannerList.get(ran).getLink()%>";
+	$("#sideBanner").attr("src","img/banner/${sideBannerList[num].banner_id}.jpg");
+	$("#sideBanner").click(function() {
+		location.href="${sideBannerList[num].link}";
 	});
 </script>
-<%}%>
+</c:if>

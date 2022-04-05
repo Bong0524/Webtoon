@@ -66,7 +66,8 @@ public class WebtoonPro extends HttpServlet {
 				toonpageList.add(toonpage);
 			}
 			request.setAttribute("toonpageList", toonpageList);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp?inPage=webtoon");
+			request.setAttribute("inPage", "webtoon");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

@@ -1,13 +1,6 @@
-<%@page import="com.humanwebtoon.vo.UserInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-UserInfo user = (UserInfo) session.getAttribute("user");
-/* 작가가 아닌 유저가 업로드 페이지에 들어올경우 돌려보낸다. */
-if(user == null){
-	response.sendRedirect("index.jsp");
-}
-%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,7 +74,11 @@ input::-webkit-inner-spin-button {
 </style>
 </head>
 <body>
-		<jsp:include page="header.jsp"/>
+/* 작가가 아닌 유저가 업로드 페이지에 들어올경우 돌려보낸다. */
+<c:if test="${user.grade eq '작가'}">
+	response.sendRedirect("index.jsp");
+</c:if>
+	<jsp:include page="header.jsp"/>
 	<div id="container">
 		<form name="requestForm" action="RequestPro" method="post" enctype="multipart/form-data">
 			<!-- 웹툰에 대한 소개 -->

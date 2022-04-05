@@ -1,28 +1,20 @@
-<%@page import="com.humanwebtoon.vo.ToonpageInfo"%>
-<%@page import="com.humanwebtoon.vo.WebtoonInfo"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-ArrayList<WebtoonInfo> webtoonList = (ArrayList<WebtoonInfo>)request.getAttribute("webtoonList");
-ArrayList<ToonpageInfo> toonpageList = (ArrayList<ToonpageInfo>)request.getAttribute("toonpageList");
-%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div>
-<%for(int i = 0 ; i < webtoonList.size() ; i++){ 
-	WebtoonInfo webtoon = webtoonList.get(i);
-%>
-<fieldset style="margin-bottom: 20px; position: relative; cursor: pointer;" onclick="location.href='WebtoonPro?toon=<%=webtoon.getToon_id() %>'">
-	<img alt="이미지 오류.." src="img/<%=webtoon.getToon_id()%>/thumbnail.jpg"
-		width="200px" height="200px" style="float: left; margin-right: 10px">
-	<div style="padding: 5px">
-		<h1 style="display: inline;"><%=webtoon.getTitle()%></h1>
-		<p style="display: inline;">
-			(작가 : <%=webtoon.getWriter()%>)
+<c:forEach var="webtoon" items="webtoonList">
+	<fieldset style="margin-bottom: 20px; position: relative; cursor: pointer;" onclick="location.href='WebtoonPro?toon=${webtoon.toon_id}'">
+		<img alt="이미지 오류.." src="img/${webtoon.toon_id}/thumbnail.jpg"
+			width="200px" height="200px" style="float: left; margin-right: 10px">
+		<div style="padding: 5px">
+			<h1 style="display: inline;">${webtoon.title}</h1>
+			<p style="display: inline;">
+				(작가 : ${webtoon.writer})
+			</p>
+		</div>
+		<p style="word-break: keep-all; padding: 10px;">
+			${webtoon.info}
 		</p>
-	</div>
-	<p style="word-break: keep-all; padding: 10px;">
-		<%=webtoon.getInfo()%>
-	</p>
-</fieldset>
-<%} %>
+	</fieldset>
+</c:forEach>
 </div>
